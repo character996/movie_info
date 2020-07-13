@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>总共搜索到{{ movies.paginator.count}}条记录</h3>
+{% for movie in movies %}
+{% if movie %}
+<div style="border:1px solid green">
+    <p>{{ movie.name }}</p>
+    <p><a href={{ movie.href }}>{{ movie.href }}</a></p>
+    <p>{{ movie.workers }}</p>
+    <p>{{ movie.abstract }}</p>
+    <p>{{ movie.score }}</p>
+</div>
+{% endif %}
+{% endfor %}
+
+        <div class="pagination">
+        <span class="step-links">
+            {% if movies.has_previous %}
+                <a href="?title={{ title }}&page_num=1">&laquo; first</a>
+                <a href="?title={{ title }}&page_num={{ movies.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ movies.number }} of {{ movies.paginator.num_pages }}.
+            </span>
+
+            {% if movies.has_next %}
+                <a href="?title={{ title }}&page_num={{ movies.next_page_number }}">next</a>
+                <a href="?title={{ title }}&page_num={{ movies.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+{% endblock %}

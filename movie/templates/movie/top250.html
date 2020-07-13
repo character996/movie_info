@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="" >
+    {% for movie in movies %}
+    <div class="movie_info">
+        <p>{{ movie.rank }}</p>
+        <p><a href={{ movie.href }}>{{ movie.href }}</a></p>
+        <p>{{ movie.name }}</p>
+        <p>{{ movie.worker }}</p>
+    </div>
+    <p>{% endfor %}</p>
+
+        <div class="pagination">
+        <span class="step-links">
+            {% if movies.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ movies.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ movies.number }} of {{ movies.paginator.num_pages }}.
+            </span>
+
+            {% if movies.has_next %}
+                <a href="?page={{ movies.next_page_number }}">next</a>
+                <a href="?page={{ movies.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    {% endblock %}
+</div>
