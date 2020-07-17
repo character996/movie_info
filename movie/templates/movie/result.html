@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h3>总共搜索到{{ movies.paginator.count}}条记录</h3>
-{% for movie in movies %}
+<h3>总共搜索到{{ page_obj.paginator.count}}条记录</h3>
+{% for movie in page_obj %}
 {% if movie %}
 <div style="border:1px solid green">
     <p>{{ movie.name }}</p>
@@ -16,18 +16,18 @@
 
         <div class="pagination">
         <span class="step-links">
-            {% if movies.has_previous %}
-                <a href="?title={{ title }}&page_num=1">&laquo; first</a>
-                <a href="?title={{ title }}&page_num={{ movies.previous_page_number }}">previous</a>
+            {% if page_obj.has_previous %}
+                <a href="?title={{ params.title }}&num={{ params.num }}&page=1">&laquo; first</a>
+                <a href="?title={{ params.title }}&num={{ params.num }}&page={{ page_obj.previous_page_number }}">previous</a>
             {% endif %}
 
             <span class="current">
-                Page {{ movies.number }} of {{ movies.paginator.num_pages }}.
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
             </span>
 
-            {% if movies.has_next %}
-                <a href="?title={{ title }}&page_num={{ movies.next_page_number }}">next</a>
-                <a href="?title={{ title }}&page_num={{ movies.paginator.num_pages }}">last &raquo;</a>
+            {% if page_obj.has_next %}
+                <a href="?title={{ params.title }}&num={{ params.num }}&page={{ page_obj.next_page_number }}">next</a>
+                <a href="?title={{ params.title }}&num={{ params.num }}&page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
             {% endif %}
         </span>
     </div>
