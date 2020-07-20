@@ -142,4 +142,17 @@ DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': lambda x: True,
 }
 
+# 配置发送邮件的相关参数
+# 邮件的后端模块
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# 发送方的smtp服务器地址
+EMAIL_HOST = 'smtp.qq.com'
+# smtp服务端口
+EMAIL_PORT = 25
+# 发送服务器的用户名
+EMAIL_HOST_USER = '870418012@qq.com'
+# 授权码
+EMAIL_HOST_PASSWORD = 'nxwy lmpc osrx bdgi'
+# 与SMTP服务器通讯时是否启用安全模式
+EMAIL_USE_TLS = False
 
