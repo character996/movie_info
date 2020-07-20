@@ -22,4 +22,10 @@ urlpatterns = [
     path('', include('movie.urls'))
 ]
 
+# 调试工具栏配置
+if settings.DEBUG:
+
+    import debug_toolbar
+
+    urlpatterns.insert(0, path('__debug__/', include(debug_toolbar.urls)))
 
