@@ -127,3 +127,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# 调试工具栏配置
+# INSTALLED_APPS = [
+#     'debug_toolbar',
+# ]
+#
+# MIDDLEWARE = [
+#     'debug_toolbar.middleware.DebugToolbarMiddleware',
+# ]
+#
+# DEBUG_TOOLBAR_CONFIG = {
+#     # 引入jQuery库
+#     'JQUERY_URL': 'https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js',
+#     # 工具栏是否折叠
+#     'SHOW_COLLAPSED': True,
+#     # 是否显示工具栏
+#     'SHOW_TOOLBAR_CALLBACK': lambda x: True,
+# }

@@ -95,7 +95,8 @@ def search(request):
                 movie_per_page = search_movie.detail_data(data_per_page)
                 # movies_data += movie_per_page
                 for data in movie_per_page:
-                    movie_obj = SearchResult(name=data[0], href=data[1], workers=data[2], abstract=data[3],
+                    movie_obj = SearchResult(name=data[0][0:200], href=data[1][0:100], workers=data[2][0:200],
+                                             abstract=data[3][0:200],
                                              score=data[4],
                                              title=search_title)
                     movie_obj.save()
