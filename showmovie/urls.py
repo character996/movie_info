@@ -19,7 +19,9 @@ from . import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('movie.urls'))
+    path('', include('movie.urls')),
+    path('user/', include('user.urls')),
+    path('captcha/', include('captcha.urls')),
 ]
 
 # 调试工具栏配置

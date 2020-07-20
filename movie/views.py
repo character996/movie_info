@@ -19,7 +19,7 @@ class Top250View(ListView):
     paginate_by = 25
     context_object_name = 'movies'
     ordering = 'rank'
-    print('********')
+    # print('********')
     # def get_context_data(self, **kwargs):
     #     movies = super().get_context_data(**kwargs)
     #     # movies['movies'] = Top250.objects.all()

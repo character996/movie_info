@@ -1,0 +1,13 @@
+
+.user {
+             float: right;
+             margin-right: 10px;
+         }
+.user>a {
+             margin-right: 10px;
+         }
+.float_clear:after{
+            display:block;
+            clear:both;content:"";
+            visibility:hidden;
+            height:0}
