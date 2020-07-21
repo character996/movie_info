@@ -152,7 +152,9 @@ EMAIL_PORT = 25
 # 发送服务器的用户名
 EMAIL_HOST_USER = '870418012@qq.com'
 # 授权码
-EMAIL_HOST_PASSWORD = 'nxwy lmpc osrx bdgi'
+EMAIL_HOST_PASSWORD = 'nxwylmpcosrxbdgi'
 # 与SMTP服务器通讯时是否启用安全模式
 EMAIL_USE_TLS = False
+CONFIRM_DAYS = 7
+EMAIL_FROM = '发送人<870418012@qq.com>'
 

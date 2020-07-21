@@ -8,7 +8,11 @@
     <div class="user">
     {% if request.session.user_id %}
     <span>Hi,&nbsp;{{ request.session.user_name }}</span>&nbsp;&nbsp;
-    <a href="{% url 'user:logout' %}">注销</a>
+        {% if  not request.session.has_confirm %}
+            <span>您的邮箱未确定,去注册邮箱确认</span>
+<!--        <a href="{% url 'user:confirm' %}">去确定</a>-->
+        {% endif %}
+        <p><a href="{% url 'user:logout' %}">注销</a></p>
     {% else %}
     <a href="{% url 'user:login' %}">登录</a>&nbsp;&nbsp;
     <a href="{% url 'user:register' %}">注册</a>
