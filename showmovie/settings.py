@@ -25,7 +25,7 @@ SECRET_KEY = '6zfnky^=z3=+@2kj)7!d12o&#z#(ga1k!t*(%=z3s@%zs93743'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -52,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'movie.middlewares.check_login_middleware',
 ]
 
 ROOT_URLCONF = 'showmovie.urls'

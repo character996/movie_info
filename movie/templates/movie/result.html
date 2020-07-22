@@ -2,6 +2,7 @@
 
 {% block content %}
 <h3>总共搜索到{{ page_obj.paginator.count}}条记录</h3>
+<h4><a href="{% url 'movie:home' %}">继续搜索</a></h4>
 {% for movie in page_obj %}
 {% if movie %}
 <div style="border:1px solid green">

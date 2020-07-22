@@ -43,12 +43,14 @@ def get_content(start, key_word):
     ctx = execjs.compile(decrypt_js)
 # data是所需的数据，将每项数据按字典存储
     data = ctx.call('decrypt', r)['payload']['items']
-    if len(data) == 0:
+    print(data)
+    if data is False:
         return False
     return data
 
 
 def detail_data(data):
+    print(data)
     result = []
     for item in data:
         temp = []

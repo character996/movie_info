@@ -6,6 +6,7 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+from user.models import User
 
 
 class Top250(models.Model):
@@ -19,18 +20,11 @@ class Top250(models.Model):
     class Meta:
         managed = False
         db_table = 'top250'
+        verbose_name = 'TOP250'
+        verbose_name_plural = 'TOP250'
 
     def __str__(self):
         return self.name
-
-
-class Users(models.Model):
-    email = models.CharField(max_length=255)
-    password = models.CharField(max_length=255)
-
-    class Meta:
-        managed = False
-        db_table = 'users'
 
 
 class SearchTitle(models.Model):
@@ -39,9 +33,15 @@ class SearchTitle(models.Model):
 
     class Meta:
         db_table = 'title'
+        verbose_name = '搜索标题'
+        verbose_name_plural = '搜索标题'
 
     def __str__(self):
         return self.title
+
+    @property
+    def result_count(self):
+        return self.searchresult_set.all().count()
 
 
 class SearchResult(models.Model):
@@ -54,3 +54,20 @@ class SearchResult(models.Model):
 
     class Meta:
         db_table = 'search_result'
+
+
+class SearchRecord(models.Model):
+    title = models.CharField(max_length=30, verbose_name='搜寻关键字')
+    c_time = models.DateTimeField(auto_now_add=True, verbose_name='时间')
+    user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='用户')
+    result = models.BooleanField('查询是否成功')
+    num = models.CharField(max_length=3, verbose_name='查询的数量')
+
+    def __str__(self):
+        return self.user.name + ':' + self.title
+
+    class Meta:
+        db_table = 'search_record'
+        verbose_name = '搜索记录'
+        verbose_name_plural = '搜索记录'
+
