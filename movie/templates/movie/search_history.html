@@ -1,0 +1,24 @@
+{% extends "movie_base.html" %}
+
+{% block content %}
+<h3>总共查询出{{ historys.count }}条数据
+</h3>
+<table border="1" style="margin:auto;">
+    <tr>
+        <th>查询关键字</th>
+        <th>查询数量</th>
+        <th>查询时间</th>
+        <th>查询结果</th>
+    </tr>
+    {% for history in historys %}
+    <tr>
+        <td>{{ history.title }}</td>
+        <td>{{history.num}}</td>
+        <td>{{ history.c_time}}</td>
+        <td>{{history.result}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+{% endblock %}

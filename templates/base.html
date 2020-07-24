@@ -1,14 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="width:100%;height:100%">
 <head>
     <meta charset="UTF-8">
     <title>movie</title>
 </head>
-<body>
+<body style="margin:0;width:100%;height:100%">
+        <div class="body_content" style="background-color: beige;">
+        <div class="header"  style="padding:0% 10%;">
+            {% block header %}
+            {% endblock %}
+        </div>
         <div class="content">
-            <div class="root" style="text-align:center;">
+            <div class="root" style="text-align:center;padding:0% 10%;">
         {% block content %}
         {% endblock %}
+        </div>
         </div>
         </div>
 </body>

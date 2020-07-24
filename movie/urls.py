@@ -8,5 +8,5 @@ urlpatterns = [
     path('top250/', views.Top250View.as_view(), name='top250'),
     path('search/', views.search, name='search'),
     path('search_result/', views.SearchResultView.as_view(), name='search_result'),
-    # path('search_result/<title:int>', views.result, name='result'),
+    path('search/history/', views.HistoryView.as_view(), name='history'),
 ]

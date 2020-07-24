@@ -38,13 +38,13 @@ def search(request):
         print(request.POST.dict())
         try:
             is_success = False
+            num = int(request.POST['num'])
+            print(num)
             if request.POST['title'] == '':
                 message = '请输入搜索的关键字'
                 raise ValueError
             title = request.POST['title'][0:30]
             print(title)
-            num = int(request.POST['num'])
-            print(num)
             if title and num:
                 search_title, created = SearchTitle.objects.get_or_create(
                     title=title,
@@ -71,7 +71,10 @@ def search(request):
         except ValueError:
             return render(request, 'movie/home.html', {'message': message, })
         finally:
-            title = title
+            try:
+                title = title
+            except UnboundLocalError:
+                title = '未输入有效关键字'
             num = num
             user_id = request.session['user_id']
             user = User.objects.get(id=user_id)
@@ -96,7 +99,7 @@ class SearchResultView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         result = super().get_context_data(**kwargs)
         result['params'] = self.request.GET.dict()
-        print(result)
+        # print(result)
         return result
     # def get_context_data(self, **kwargs):
     #     movies = super().get_context_data(**kwargs).filter
@@ -112,3 +115,18 @@ class SearchResultView(ListView):
 #         title = request.GET.get('title')
 #         print('title:', title, type(title))
 #         page_num = int(request.GET.get('page_num'))
+
+
+class HistoryView(ListView):
+    template_name = 'movie/search_history.html'
+    model = SearchRecord
+    context_object_name = 'historys'
+    ordering = '-c_time'
+
+    def get_queryset(self):
+        user_id = self.request.session['user_id']
+        user = User.objects.get(id=user_id)
+        print()
+        return SearchRecord.objects.filter(user=user)
+
+

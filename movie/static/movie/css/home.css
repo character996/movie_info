@@ -11,3 +11,7 @@
             clear:both;content:"";
             visibility:hidden;
             height:0}
+.pagination{
+            margin:30px;
+            font-size:20px;
+}
