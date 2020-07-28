@@ -22,6 +22,7 @@ urlpatterns = [
     path('', include('movie.urls')),
     path('user/', include('user.urls')),
     path('captcha/', include('captcha.urls')),
+    path('api/', include('api.urls'))
 ]
 
 # 调试工具栏配置

@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block content %}
+<div id="data">
+
+  <h1>总共有<span id="sum">{{ count }}</span>条查询结果</h1>
+    <button class="show_intro">dianji</button>
+  <div id="movie_info">
+        <div class="movie">
+
+        </div>
+  </div>
+<!--  <button type="submit">more</button>-->
+  <button id="dict">继续加载</button>
+  <p id="list_result"></p>
+</div>
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+  <script>
+  $(document).ready(function(){
+      $.ajax({
+        url:"/api/movie/",
+        type:"GET",
+        success:function(ret){
+          sector1 = $("#movie_info>.movie")
+          console.log(sector1)
+          console.log(ret);
+          console.log('print:'  + ret.count);
+          console.log(ret.data);
+          $('#sum').html( ret.count);
+          console.log(ret.data)
+          var dataObj = ret.data; //返回的result为json格式的数据
+         console.log(typeof(dataObj))
+         // 循环取 json 对象 中的data对象数据，写入元素中
+         $.each(dataObj, function(index, movie){
+          // 找出 #movie_info 下面的最后一个 .movie元素
+                 sector = $("#movie_info>.movie:last")
+                 console.log(index, movie.title, movie);
+                 fields = movie.fields;
+                 con = '';
+                 con += '<p><a href="' + fields.url + '">' + fields.title + '</a></p>';
+                 con += '<p><span>导演：' + fields.directors + '</span>';
+                 con += '<span>&nbsp;&nbsp;评分：' + fields.rate + '</span></p>';
+                 con += '<p>演员：' + fields.casts + '</p>';
+                 con += '<p>分类：' + fields.tags + '</p>';
+                 con += '<button class="show_intro">显示简介</button>'
+                 '<button class="show_intro">dianji</button>'
+                 // 将con中新建的标签写入 sector中
+                  sector.append(con);
+                 // sector后添加一个div 用于下次添加 movie信息
+                  sector.after('<div class="movie"></div>')
+                 console.log(index + movie)
+         });
+        }
+      })
+      $('#dict').click(function(){
+          $.getJSON('/api/movie/',function(ret){
+              if (ret.has_next == false){
+                  $('#dict').hide()
+                  }
+             sector1 = $("#movie_info>.movie")
+          console.log(sector1)
+          console.log(ret);
+          console.log('print:'  + ret.count);
+          console.log(ret.data);
+          $('#sum').html( ret.count);
+          console.log(ret.data)
+          var dataObj = ret.data; //返回的result为json格式的数据
+         console.log(typeof(dataObj))
+         // 循环取 json 对象 中的data对象数据，写入元素中
+         $.each(dataObj, function(index, movie){
+          // 找出 #movie_info 下面的最后一个 .movie元素
+                 sector = $("#movie_info>.movie:last")
+                 console.log(index, movie.title, movie);
+                 fields = movie.fields;
+                 con = '';
+                 con += '<p><a href="' + fields.url + '">' + fields.title + '</a></p>';
+                 con += '<p><span>导演：' + fields.directors + '</span>';
+                 con += '<span>&nbsp;&nbsp;评分：' + fields.rate + '</span></p>';
+                 con += '<p>演员：' + fields.casts + '</p>';
+                 con += '<p>分类：' + fields.tags + '</p>';
+                 con += '<button class="show_intro">显示简介</button>'
+                 // 将con中新建的标签写入 sector中
+                  sector.append(con);
+                 // sector后添加一个div 用于下次添加 movie信息
+                  sector.after('<div class="movie"></div>')
+                 console.log(index + movie)
+                         });
+          })
+      })
+
+    })
+    $('#movie_info').on('click', function(){
+          console.log('点击')
+          console.log($(this))
+          $.ajax({
+              url:'/api/intro/',
+              data:{title:'肖申克的救赎'},
+              success: function(res){
+                  console.log(res)
+              }
+          })
+       })
+  </script>
+{% endblock %}
+
