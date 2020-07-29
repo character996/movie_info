@@ -4,14 +4,12 @@
 {% block content %}
 <div id="data">
 
-  <h1>总共有<span id="sum">{{ count }}</span>条查询结果</h1>
-    <button class="show_intro">dianji</button>
+  <h1>总共有<span id="sum"></span>条查询结果</h1>
   <div id="movie_info">
         <div class="movie">
 
         </div>
   </div>
-<!--  <button type="submit">more</button>-->
   <button id="dict">继续加载</button>
   <p id="list_result"></p>
 </div>
@@ -22,6 +20,9 @@
         url:"/api/movie/",
         type:"GET",
         success:function(ret){
+          if (ret.has_next == false){
+                  $('#dict').hide()
+                  }
           sector1 = $("#movie_info>.movie")
           console.log(sector1)
           console.log(ret);
@@ -38,13 +39,12 @@
                  console.log(index, movie.title, movie);
                  fields = movie.fields;
                  con = '';
-                 con += '<p><a href="' + fields.url + '">' + fields.title + '</a></p>';
-                 con += '<p><span>导演：' + fields.directors + '</span>';
+                 con += '<p class="title"><a href="' + fields.url + '">' + fields.title + '</a></p>';
+                 con += '<p><span class="directors">导演：' + fields.directors + '</span>';
                  con += '<span>&nbsp;&nbsp;评分：' + fields.rate + '</span></p>';
-                 con += '<p>演员：' + fields.casts + '</p>';
-                 con += '<p>分类：' + fields.tags + '</p>';
+                 con += '<p class="casts">演员：' + fields.casts + '</p>';
+                 con += '<p class="tags">分类：' + fields.tags + '</p>';
                  con += '<button class="show_intro">显示简介</button>'
-                 '<button class="show_intro">dianji</button>'
                  // 将con中新建的标签写入 sector中
                   sector.append(con);
                  // sector后添加一个div 用于下次添加 movie信息
@@ -74,12 +74,13 @@
                  console.log(index, movie.title, movie);
                  fields = movie.fields;
                  con = '';
-                 con += '<p><a href="' + fields.url + '">' + fields.title + '</a></p>';
-                 con += '<p><span>导演：' + fields.directors + '</span>';
+                 con += '<p class="title"><a href="' + fields.url + '">' + fields.title + '</a></p>';
+                 con += '<p><span class="directors">导演：' + fields.directors + '</span>';
                  con += '<span>&nbsp;&nbsp;评分：' + fields.rate + '</span></p>';
-                 con += '<p>演员：' + fields.casts + '</p>';
-                 con += '<p>分类：' + fields.tags + '</p>';
+                 con += '<p class="casts">演员：' + fields.casts + '</p>';
+                 con += '<p class="tags">分类：' + fields.tags + '</p>';
                  con += '<button class="show_intro">显示简介</button>'
+                 con += '<p class="test"></p>'
                  // 将con中新建的标签写入 sector中
                   sector.append(con);
                  // sector后添加一个div 用于下次添加 movie信息
@@ -90,16 +91,35 @@
       })
 
     })
-    $('#movie_info').on('click', function(){
-          console.log('点击')
-          console.log($(this))
-          $.ajax({
-              url:'/api/intro/',
-              data:{title:'肖申克的救赎'},
-              success: function(res){
-                  console.log(res)
-              }
-          })
+    $('#movie_info').on('click','.show_intro', function(){
+            if ($(this).text() == '显示简介'){
+                  // 将button文字改为隐藏
+
+                  console.log('点击显示');
+                  console.log($(this).attr('class'));
+                  var parent = $(this).parent();
+                  console.log('aaa')
+                  console.log($(this).siblings("p[class='title']").children("a"))
+                  var node = $(this).siblings("p[class='title']").children("a")
+                  var href = node.attr("href");
+                  console.log('text:'+href);
+                  $.ajax({
+                      url:'/api/intro/',
+                      data:{url:href},
+                      success: function(res){
+                          console.log(res.data);
+                          // 将结果添加到movie中
+                          con = '<p class="intro">'+res.data+'</p>';
+                          parent.append(con);
+                      }
+                  })
+                  $(this).text('隐藏简介');
+                  }
+            else{
+                  console.log('点击隐藏')
+                  $(this).siblings('p[class="intro"]').remove();
+                  $(this).text('显示简介');
+            }
        })
   </script>
 {% endblock %}
