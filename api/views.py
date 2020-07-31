@@ -14,9 +14,11 @@ import time
 class AllMovieView(View):
 
     def get(self, request):
+        """接收get请求，返回数据"""
         start_time = time.clock()
         result = {}
         print(request.session['start'])
+        # 判断请求是否是ajax
         if request.is_ajax():
             title = request.session['title'].strip()
             # 先查询包含输入的title
@@ -68,6 +70,7 @@ class AllMovieView(View):
             return JsonResponse(result, safe=False, content_type='application/json')
 
     def post(self, request):
+        """根据返回的title信息，用session存储，get请求返回具体的数据，在前端界面利用ajax发出get请求"""
         print('zhixing post')
         dicts = request.POST.dict()
         request.session['title'] = dicts.get('title')
@@ -87,6 +90,7 @@ class AllMovieView(View):
 
 
 def get_intro(request):
+    """返回电影简介信息"""
     url = request.GET.get('url')
     li = url.split('/')
     unique = li[-2]
