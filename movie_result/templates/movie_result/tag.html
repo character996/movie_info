@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'movie_result/css/tag.css' %}"/>
+<div class="content_info">
+    <input id="select_tag" type="hidden" value="{{result.tag}}">
+    <h1 class="">选影视</h1>
+    <ul id="tags">
+
+    </ul>
+    <ul id="info">
+
+    </ul>
+    <a id="add" href="javascript:;">加载更多</a>
+</div>
+
+<script>
+    var start = 0
+    value = $('#select_tag').val()
+    num = 10
+    $.ajax({
+        url:"/api/tags/",
+        type:"GET",
+        success:function(ret){
+
+            console.log(ret)
+            data = ret.data
+            base_url='/movie_result/tags/'
+            console.log(base_url)
+            sector = $('#tags')
+            var con = '';
+            for (i = 0; i < data.length; i++) {
+                if(value == data[i]){
+                    con += "<li class='tag-checked'><a id='tag-checked_a' href='"+base_url+"?tag="+data[i]+"'>"+data[i]+"</a></li>";
+                }else{
+                con += "<li><a href='"+base_url+"?tag="+data[i]+"'>"+data[i]+"</a></li>";
+                }
+            }
+            sector.append(con)
+        }
+    })
+    function tag_movie(value,start,num){
+        $.ajax({
+        url:"/api/type/?type=tag&value="+value+"&start="+start+"&num="+num,
+        type:"GET",
+        success:function(ret){
+            if (ret.has_next){
+                $('#add').show()
+            }else{
+                $('#add').hide()
+            }
+            console.log(ret)
+            data = ret.data
+            var con = ''
+            for (i=0;i<data.length;i++){
+                cover  = data[i].cover
+                cover  = cover.replace(/webp/,"jpg")
+                con += "<li><img src='"+cover+"'  rel='nofollow'><p>"+data[i].title+"</p></li>"
+            }
+            $('#info').append(con)
+
+        }
+    })
+    }
+    tag_movie(value,start,num)
+    $('#tags').on('click','li',function(){
+        start = 0
+        tag = $(this).text()
+    })
+    $('#add').click(function(){
+        start += num
+        tag_movie(value,start,num)
+
+      })
+</script>
+{% endblock %}

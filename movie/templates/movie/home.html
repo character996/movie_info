@@ -21,10 +21,8 @@
 </div>
     <h1><a href="{% url 'movie:top250' %}">豆瓣电影TOP250</a></h1>
     <p>{{ message }}</p>
-    <form action="{% url 'api:movie' %}"  method="post">
-        {% csrf_token %}
+    <form action="/movie_result/search_subjects/"  method="get">
         <div>输入要搜索的关键字<input type="text" name="title" placeholder="关键字"></div>
-        <div>输入要搜索的电影数量<input type="text" name="num" placeholder="数量" value="15"></div>
         <input type="submit" value="搜索">
     </form>
     </h1>

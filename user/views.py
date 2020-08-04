@@ -49,7 +49,7 @@ def login(request):
     print('session:', request.session, type(request.session))
     if request.session.get('is_login', None):
         print('1')
-        return redirect(reverse('movie:home'))
+        return redirect('/')
     message = '请输入信息登录'
     if request.method == 'POST':
         login_form = forms.LoginForm(request.POST)
@@ -71,7 +71,7 @@ def login(request):
                 request.session['user_name'] = user.name
                 request.session['has_confirm'] = user.has_confirmed
                 print(request.session['has_confirm'])
-                return redirect(reverse("movie:home"))
+                return redirect('/')
             else:
                 message = '密码不正确！'
                 print('3')
@@ -88,7 +88,7 @@ def login(request):
 
 def register(request):
     if request.session.get('is_login', None):
-        return redirect(reverse('movie:home'))
+        return redirect('/')
 
     message = "请填写信息注册账号"
     if request.method == 'POST':
@@ -131,7 +131,7 @@ def logout(request):
         # 如果没有登录,跳转到登录页面
         return redirect(reverse('user:login'))
     request.session.flush()
-    return redirect(reverse('movie:home'))
+    return redirect('/')
 
 
 def user_confirm(request):

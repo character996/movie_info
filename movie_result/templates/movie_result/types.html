@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block content %}
+<div id="data">
+
+  <h1>总共有<span id="sum"></span>条查询结果</h1>
+    <input id="type" type="hidden" value="{{result.type}}">
+    <input id="value" type="hidden" value="{{result.value}}">
+  <div id="movie_info">
+        <div class="movie">
+
+        </div>
+  </div>
+  <button id="dict">继续加载</button>
+  <p id="list_result"></p>
+</div>
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+  <script>
+  value = $('#value').val()
+  type = $('#type').val()
+  var start = 0
+  num = 20
+  function get_movies(type,value,start,num){
+    $.ajax({
+    url:"/api/type/?value="+value+"&start="+start+"&num="+num+"&type="+type,
+    type:"GET",
+    success:function(ret){
+      console.log(ret)
+      if (ret.has_next == false){
+              $('#dict').hide()
+              }
+      sector1 = $("#movie_info>.movie")
+      console.log(sector1)
+      console.log(ret);
+      console.log('print:'  + ret.count);
+      console.log(ret.data);
+      $('#sum').html( ret.count);
+      console.log(ret.data)
+      var data = ret.data; //返回的result为json格式的数据
+     console.log(typeof(dataObj))
+     for (var i=0;i<data.length;i++){
+        sector = $("#movie_info>.movie:last")
+        con = '';
+         con += '<p class="title"><a href="' + data[i].url + '">' + data[i].title + '</a></p>';
+         con += '<p><span class="directors">导演：' + data[i].directors + '</span>';
+         con += '<span>&nbsp;&nbsp;评分：' + data[i].rate + '</span></p>';
+         con += '<p class="casts">演员：' + data[i].casts + '</p>';
+         if(data[i].tags.length){
+            tags = data[i].tags
+            con += '<p class="tags">分类：'
+            for(var j=0;j<tags.length;j++){
+                    con += "<span><a class='select_clock' href='/movie_result/type/?type=tag&value="+tags[j]+"'>"+tags[j]+"</a>&nbsp&nbsp</span>"
+            }
+            con += '</p>';
+         }else{
+            con += '<p class="tags">分类：暂无分类</p>';
+         }
+         if(data[i].intro){
+            con += '<button class="show_intro">显示简介</button>'
+           }else{
+            con += '<button class="show_intro">暂无简介</button>'
+           }
+         // 将con中新建的标签写入 sector中
+          sector.append(con);
+         // sector后添加一个div 用于下次添加 movie信息
+          sector.after('<div class="movie"></div>')
+     }
+     // 循环取 json 对象 中的data对象数据，写入元素中
+         
+        }
+      })
+    }
+  $(document).ready(function(){
+      get_movies(type,value,start,num)
+
+
+      $('#dict').click(function(){
+        start += num
+        get_movies(type,value,start,num)
+
+      })
+
+    })
+    $('#movie_info').on('click','.show_intro', function(){
+            if ($(this).text() == '显示简介'){
+                  // 将button文字改为隐藏
+
+                  console.log('点击显示');
+                  console.log($(this).attr('class'));
+                  var parent = $(this).parent();
+                  console.log('aaa')
+                  console.log($(this).siblings("p[class='title']").children("a"))
+                  var node = $(this).siblings("p[class='title']").children("a")
+                  var href = node.attr("href");
+                  console.log('text:'+href);
+                  $.ajax({
+                      url:'/api/intro/',
+                      data:{url:href},
+                      success: function(res){
+                          console.log(res.data);
+                          // 将结果添加到movie中
+                          con = '<p class="intro">'+res.data+'</p>';
+                          parent.append(con);
+                      }
+                  })
+                  $(this).text('隐藏简介');
+                  }
+            else{
+                  console.log('点击隐藏')
+                  $(this).siblings('p[class="intro"]').remove();
+                  $(this).text('显示简介');
+            }
+       })
+  </script>
+{% endblock %}
+

@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'movie_result.apps.MovieResultConfig',
     'api.apps.ApiConfig',
     'user.apps.UserConfig',
     'movie.apps.MovieConfig',
@@ -133,6 +134,9 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    (os.path.join(BASE_DIR, 'static'))
+]
 
 # 调试工具栏配置
 DEBUG_TOOLBAR_CONFIG = {

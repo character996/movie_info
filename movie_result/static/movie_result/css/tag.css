@@ -1,0 +1,47 @@
+.content_info{
+    padding-bottom:80px;
+}
+li{
+    float:left;
+}
+#tags .tag-checked {
+    opacity: .8;
+    background: #258dcd;
+    color: #fff
+}
+#tag-checked_a{
+    color: #fff
+}
+ul{
+    overflow:hidden;
+}
+img{
+    width:150px;
+    height:225px;
+
+}
+#info>li{
+    margin-right:40px;
+    height:300px;
+    width:150px;
+}
+#tags>li{
+    margin:5px 0;
+    padding:0 10px;
+    cursor:pointer;
+    font-size:14px;
+    color:#333;
+
+}
+
+#info{
+    margin-top:50px;
+}
+#add{
+    background:#f7f7f7;
+    text-align:center;
+    color:#37a;
+    display:block;
+    line-height:2;
+    text-decoration: none;
+}

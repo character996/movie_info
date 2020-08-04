@@ -16,13 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from . import settings
+from movie_result import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('movie.urls')),
+    # path('', include('movie_result.urls')),
+    path('', views.tags),
     path('user/', include('user.urls')),
     path('captcha/', include('captcha.urls')),
-    path('api/', include('api.urls'))
+    path('api/', include('api.urls')),
+    path('movie_result/', include('movie_result.urls')),
 ]
 
 # 调试工具栏配置
