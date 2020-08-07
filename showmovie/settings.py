@@ -89,7 +89,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'movie_info',
         'USER': 'root',
-        'PASSWORD': '0515xrb',
+        'PASSWORD': '******',
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -164,9 +164,9 @@ EMAIL_HOST = 'smtp.qq.com'
 # smtp服务端口
 EMAIL_PORT = 25
 # 发送服务器的用户名
-EMAIL_HOST_USER = '870418012@qq.com'
+EMAIL_HOST_USER = '******@qq.com'
 # 授权码
-EMAIL_HOST_PASSWORD = 'nxwylmpcosrxbdgi'
+EMAIL_HOST_PASSWORD = '******'
 # 与SMTP服务器通讯时是否启用安全模式
 EMAIL_USE_TLS = False
 CONFIRM_DAYS = 7
